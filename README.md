@@ -1,5 +1,5 @@
 # springboot-crud
-Simples Customer and Account CRUD using Springboot, H2 and JPA.
+Simple Customer and Account CRUD using Springboot, H2 and JPA.
 
 
 # Sample Project
