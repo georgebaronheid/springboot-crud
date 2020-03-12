@@ -25,23 +25,23 @@ public class CustomerController {
 
     @PostMapping(value = "/customers")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Customer registerUser (@RequestBody Customer customer) {
+    public Customer registerUser (@RequestBody final Customer customer) {
         return customerRepository.save(customer);
     }
 
     @GetMapping(value = "/customers")
-    public Page<Customer> all (Pageable pageable) {
+    public Page<Customer> all (final Pageable pageable) {
         return customerRepository.findAll(pageable);
     }
 
     @GetMapping(value = "/customers/{customerId}")
-    public Customer findByCustomerId(@PathVariable Integer customerId) throws ResourceNotFoundException {
+    public Customer findByCustomerId(@PathVariable final Integer customerId) throws ResourceNotFoundException {
         return customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Custom [customerId="+customerId+"] can't be found"));
     }
 
     @DeleteMapping(value = "/customers/{customerId}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable Integer customerId) throws ResourceNotFoundException {
+    public ResponseEntity<?> deleteCustomer(@PathVariable final Integer customerId) throws ResourceNotFoundException {
         return customerRepository.findById(customerId)
                 .map(
                 customer -> {
@@ -53,8 +53,8 @@ public class CustomerController {
 
 
     @PatchMapping(value = "/customers/{customerId}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Integer customerId,
-                                                   @RequestBody Customer newCustomer) throws ResourceNotFoundException {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable final Integer customerId,
+                                                   @RequestBody final Customer newCustomer) throws ResourceNotFoundException {
 
         return customerRepository.findById(customerId).map(
                 customer -> {

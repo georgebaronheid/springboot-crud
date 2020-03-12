@@ -23,16 +23,16 @@ public class AccountController {
     private final AccountRepository accountRepository;
 
     @Autowired
-    private AccountController(@NonNull CustomerRepository customerRepository,
-                              @NonNull AccountRepository accountRepository) {
+    private AccountController(@NonNull final CustomerRepository customerRepository,
+                              @NonNull final AccountRepository accountRepository) {
         this.customerRepository = customerRepository;
         this.accountRepository = accountRepository;
     }
 
     @PostMapping(value = "/customer/{customerId}/accounts")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Account save(@PathVariable Integer customerId,
-                        @RequestBody Account account) throws ResourceNotFoundException {
+    public Account save(@PathVariable final Integer customerId,
+                        @RequestBody final Account account) throws ResourceNotFoundException {
         return customerRepository.findById(customerId).map(
                 customer -> {
                     account.setCustomer(customer);
@@ -42,13 +42,13 @@ public class AccountController {
     }
 
     @GetMapping(value = "/customer/{customerId}/accounts")
-    public Page<Account> all (@PathVariable Integer customerId, Pageable pageable) {
+    public Page<Account> all (@PathVariable final Integer customerId, final Pageable pageable) {
         return accountRepository.findByCustomerCustomerId(customerId, pageable);
     }
 
     @DeleteMapping(value = "/customer/{customerId}/accounts/{accountId}")
-    public ResponseEntity<?> deleteAccount(@PathVariable Integer customerId,
-                                           @PathVariable Integer accountId) throws ResourceNotFoundException {
+    public ResponseEntity<?> deleteAccount(@PathVariable final Integer customerId,
+                                           @PathVariable final Integer accountId) throws ResourceNotFoundException {
 
         if (!customerRepository.existsById(customerId)) {
             throw new ResourceNotFoundException("Customer [customerId="+customerId+"] can't be found");
@@ -61,8 +61,8 @@ public class AccountController {
     }
 
     @PutMapping(value = "/customer/{customerId}/accounts/{accountId}")
-    public ResponseEntity<Account> updateAccount(@PathVariable Integer customerId,
-                                                 @PathVariable Integer accountId,
+    public ResponseEntity<Account> updateAccount(@PathVariable final Integer customerId,
+                                                 @PathVariable final Integer accountId,
                                                  @RequestBody Account newAccount) throws ResourceNotFoundException {
 
         Customer customer = customerRepository.findById(customerId)
